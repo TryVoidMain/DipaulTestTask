@@ -28,5 +28,29 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
+
+        <Grid DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="350"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            
+        </Grid>
+
+
+        <StatusBar DockPanel.Dock="Bottom"  Height="20"
+                   VerticalAlignment="Bottom">
+            <StatusBarItem DockPanel.Dock="Right">
+                <ResizeGrip/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="Готов"/>
+            </StatusBarItem>
+        </StatusBar>
     </DockPanel>
 </Window>
