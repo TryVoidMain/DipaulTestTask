@@ -10,7 +10,10 @@ namespace DipaulTestTask.Service
     {
         static void SaveAsXML(List<Company> companies, string fileName)
         {
-
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Company>));
+            Stream stream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            serializer.Serialize(stream, companies);
+            stream.Close();
         }
 
         static List<Company> OpenXML(string fileName)
