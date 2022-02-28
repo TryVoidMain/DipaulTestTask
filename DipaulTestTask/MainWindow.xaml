@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DipaulTestTask"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        MinHeight="450" MinWidth="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -31,13 +32,13 @@
 
         <Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="350"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="350*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="400"/>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="200*"/>
             </Grid.ColumnDefinitions>
             
         </Grid>
