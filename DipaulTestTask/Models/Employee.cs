@@ -6,12 +6,14 @@ namespace DipaulTestTask.Models
     public class Employee
     {
         public string Name { get; set; }
+        public string Position { get; set; }
 
         public Employee() { }
 
-        public Employee(string name)
+        public Employee(string name, string position) : this()
         {
             Name = name;
+            Position = position;
         }
     }
 }
