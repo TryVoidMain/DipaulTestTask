@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DipaulTestTask"
+        xmlns:td ="clr-namespace:DipaulTestTask.TestData"
+        xmlns:vm="clr-namespace:DipaulTestTask.ViewModels"
+        xmlns:cmd="clr-namespace:DipaulTestTask.Infrastucture.Commands"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="{Binding Title}" Height="450" Width="800"
         MinHeight="450" MinWidth="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -20,7 +26,9 @@
 
                 </MenuItem>
                 <MenuItem Header ="Выход">
-
+                    <MenuItem.Command>
+                        <cmd:CloseWIndowCommand/>
+                    </MenuItem.Command>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Помощь">
@@ -40,7 +48,16 @@
                 <ColumnDefinition Width="400*"/>
                 <ColumnDefinition Width="200*"/>
             </Grid.ColumnDefinitions>
-            
+            <Label Grid.Column="0" Grid.Row="0">Компания:</Label>
+            <Label Grid.Column="1" Grid.Row="0">Сотрудники:</Label>
+            <DataGrid Grid.Column="0" Grid.Row="1">
+                
+            </DataGrid>
+
+            <DataGrid Grid.Column="1" Grid.Row="1">
+
+
+            </DataGrid>
         </Grid>
 
 
