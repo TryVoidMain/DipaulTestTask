@@ -3,16 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DipaulTestTask"
+        xmlns:l="clr-namespace:DipaulTestTask"
+        DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
         xmlns:td ="clr-namespace:DipaulTestTask.TestData"
         xmlns:vm="clr-namespace:DipaulTestTask.ViewModels"
         xmlns:cmd="clr-namespace:DipaulTestTask.Infrastucture.Commands"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800"
         MinHeight="450" MinWidth="800">
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
