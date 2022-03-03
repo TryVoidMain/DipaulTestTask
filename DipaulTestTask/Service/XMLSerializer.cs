@@ -6,7 +6,7 @@ using DipaulTestTask.Models;
 
 namespace DipaulTestTask.Service
 {
-    public class XMLSerializer
+    public static class XMLSerializer
     {
         static void SaveAsXML(List<Company> companies, string fileName)
         {
@@ -21,6 +21,7 @@ namespace DipaulTestTask.Service
             XmlSerializer serializer = new XmlSerializer(typeof(List<Company>));
             Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             List<Company> companies = (List<Company>)serializer.Deserialize(stream);
+            stream.Close();
             return companies;
         }
     }
