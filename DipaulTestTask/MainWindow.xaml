@@ -3,26 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:l="clr-namespace:DipaulTestTask"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
         xmlns:td ="clr-namespace:DipaulTestTask.TestData"
         xmlns:vm="clr-namespace:DipaulTestTask.ViewModels"
         xmlns:cmd="clr-namespace:DipaulTestTask.Infrastucture.Commands"
+        xmlns:mod="clr-namespace:DipaulTestTask.Models"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="800"
-        MinHeight="450" MinWidth="800">
+        Title="{Binding Title}" Height="350" Width="500"
+        MinHeight="350" MinWidth="500">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header ="Сохранить">
                     
                 </MenuItem>
-                <MenuItem Header ="Загрузить">
-
-                </MenuItem>
-                <MenuItem Header ="Сохранить">
-
-                </MenuItem>
+                <MenuItem Header ="Загрузить"
+                          Command="{Binding LoadDataCommand}"/>
                 <MenuItem Header ="Выход">
                     <MenuItem.Command>
                         <cmd:CloseWIndowCommand/>
@@ -43,22 +46,34 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="400*"/>
                 <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="100*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.Row="0">Компания:</Label>
             <Label Grid.Column="1" Grid.Row="0">Сотрудники:</Label>
-            <DataGrid Grid.Column="0" Grid.Row="1">
-                
+            <DataGrid x:Name="CompaniesGrid" Grid.Column="0" Grid.Row="1" 
+                      Width="200" Height="250" 
+                      AutoGenerateColumns="False"
+                      ItemsSource ="{Binding Companies}"
+                      SelectedItem="{Binding SelectedCompany}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Width="30" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
+
+                </DataGrid.Columns>
+
             </DataGrid>
-
-            <DataGrid Grid.Column="1" Grid.Row="1">
-
-
+            <DataGrid x:Name="EmployeesGrid" Grid.Column="1" Grid.Row="1"
+                     Width="200" Height="250"
+                     AutoGenerateColumns="False"
+                    ItemsSource="{Binding Employees}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Width="30" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Имя сотрудника" Width="4*" Binding="{Binding Name}"/>
+                    <DataGridComboBoxColumn Header="Position" Width="2*" SelectedItemBinding="{Binding Pos}"/>
+                </DataGrid.Columns>
             </DataGrid>
         </Grid>
-
-
         <StatusBar DockPanel.Dock="Bottom"  Height="20"
                    VerticalAlignment="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
