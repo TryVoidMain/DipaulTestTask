@@ -5,15 +5,18 @@ namespace DipaulTestTask.Models
     [Serializable]
     public class Employee
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Position { get; set; }
+        public Position Pos { get; set; }
 
         public Employee() { }
 
-        public Employee(string name, string position) : this()
+        public Employee(string name, Position position) : this()
         {
             Name = name;
-            Position = position;
+            Pos = position;
         }
     }
+
+
 }
