@@ -1,31 +1,35 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
 using System.Collections.Generic;
 using DipaulTestTask.Models;
 
 
 namespace DipaulTestTask.TestData
 {
-    public static class TestData
+    public class TestData
     {
-       
-        public static IList<Company> Companies { get; } = Enumerable.Range(1, 10)
-           .Select(i => new Company
-           {               
-               Id = i,
-               Name = $"CompanyName {i}",
-               Employees = Enumerable.Range(1, 5)
-                   .Select(i => new Employee
-                   {
+
+        /*        public IList<Company> Companies { get; set;  } = Enumerable.Range(1, 10)
+                   .Select(i => new Company
+                   {               
                        Id = i,
-                       Name = $"Employee {i}",
-                       Pos = Position.Developer
+                       Name = $"CompanyName {i}",
+                       Employees = Enumerable.Range(1, 5)
+                           .Select(i => new Employee
+                           {
+                               Id = i,
+                               Name = $"Employee {i}",
+                               Pos = Position.Developer
+                           })
+                           .ToList()
                    })
-                   .ToList()
-           })
-           .ToList();
+                   .ToList();*/
+
+        public IList<Company> Companies { get; set; } = new List<Company>()
+        {
+
+        };
 
 /*        public static TestData LoadFromXML(string fileName)
         {
