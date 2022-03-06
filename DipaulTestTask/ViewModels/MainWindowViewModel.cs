@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.IO;
-using System.Collections.Generic;
 
 using DipaulTestTask.ViewModels.Base;
 using DipaulTestTask.Models;
@@ -39,7 +37,7 @@ namespace DipaulTestTask.ViewModels
 
         private void OnLoadDataCommandExecuted(object p)
         {
-            Companies = new ObservableCollection<Company>(TestData.TestData.Companies);
+            Companies = new ObservableCollection<Company>(new TestData.TestData().Companies);
             Employees = new ObservableCollection<Employee>();
         }
 
@@ -71,7 +69,5 @@ namespace DipaulTestTask.ViewModels
                 return;
             SelectedEmployee.Pos = (Position)Enum.Parse(typeof(Position), e.Property.Name);
         }
-
-
     }
 }
