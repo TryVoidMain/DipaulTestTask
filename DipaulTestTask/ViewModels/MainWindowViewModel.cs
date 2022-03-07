@@ -5,11 +5,19 @@ using System.Windows.Input;
 using DipaulTestTask.ViewModels.Base;
 using DipaulTestTask.Models;
 using DipaulTestTask.Infrastucture.Commands;
+using DipaulTestTask.Interfaces;
 
 namespace DipaulTestTask.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
+        private readonly ICompanyStorage _companiesStorage;
+
+        public MainWindowViewModel(ICompanyStorage companyStorage)
+        {
+           _companiesStorage = companyStorage;
+        }
+
         private string _Title = "Главное окно программы";
         public string Title 
         { 
@@ -32,13 +40,22 @@ namespace DipaulTestTask.ViewModels
         }
 
         private ICommand _LoadDataCommand;
-        public ICommand LoadDataCommand => _LoadDataCommand ??= new LambdaCommand(
-    OnLoadDataCommandExecuted);
+        public ICommand LoadDataCommand => _LoadDataCommand 
+            ??= new LambdaCommand(OnLoadDataCommandExecuted);
 
         private void OnLoadDataCommandExecuted(object p)
-        {
-            Companies = new ObservableCollection<Company>(new TestData.TestData().Companies);
+        {            
+            _companiesStorage.Load();
+            Companies = new ObservableCollection<Company>(_companiesStorage.Items);
             Employees = new ObservableCollection<Employee>();
+        }
+        private ICommand _SaveDataCommand;
+        public ICommand SaveDataCommand => _SaveDataCommand
+            ??= new LambdaCommand(OnSaveDataCommandExecuted);
+
+        private void OnSaveDataCommandExecuted(object p)
+        {
+            _companiesStorage.SaveChanges();
         }
 
         private Company _SelectedCompany;

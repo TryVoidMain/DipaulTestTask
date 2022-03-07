@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using DipaulTestTask.ViewModels;
+using DipaulTestTask.Service;
+using DipaulTestTask.Interfaces;
 
 
 namespace DipaulTestTask
@@ -37,7 +39,10 @@ namespace DipaulTestTask
             IServiceCollection services)
         {
             services.AddSingleton<MainWindowViewModel>();
-        }
 
+            const string dataFileName = "Companies.xml";
+            var fileStorage = new DataStorageInXmlFile(dataFileName);
+            services.AddSingleton<ICompanyStorage>(fileStorage);
+        }
     }
 }

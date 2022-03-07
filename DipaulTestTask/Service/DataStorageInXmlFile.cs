@@ -11,7 +11,7 @@ namespace DipaulTestTask.Service
     {
         public class DataStructure
         {
-            public List<Company> Companies { get; set; } = new List<Company>();
+            public List<Company> сompanies { get; set; } = new List<Company>();            
         }
 
         private readonly string _FileName;
@@ -20,8 +20,7 @@ namespace DipaulTestTask.Service
 
         private DataStructure Data { get; set; } = new DataStructure();
 
-        ICollection<Company> IStorage<Company>.Items => Data.Companies;
-
+        ICollection<Company> IStorage<Company>.Items => Data.сompanies;
         public void Load()
         {
             if(!File.Exists(_FileName))
@@ -47,6 +46,5 @@ namespace DipaulTestTask.Service
             var serializer = new XmlSerializer(typeof(DataStructure));
             serializer.Serialize(file, Data);
         }
-
     }
 }
