@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Linq;
+using System.Collections.Generic;
 
 using DipaulTestTask.ViewModels.Base;
 using DipaulTestTask.Models;
 using DipaulTestTask.Infrastucture.Commands;
 using DipaulTestTask.Interfaces;
+using DipaulTestTask.Views;
 
 namespace DipaulTestTask.ViewModels
 {
@@ -25,12 +28,27 @@ namespace DipaulTestTask.ViewModels
             set => Set(ref _Title, value); 
         }
 
+        private void OnEmployeePositionSourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            if (e.Property.Name == SelectedEmployee.Pos.ToString())
+                return;
+            SelectedEmployee.Pos = (Position)Enum.Parse(typeof(Position), e.Property.Name);
+        }
+
+        #region Поля и свойства для доступа к данным
+
+        #region Компании
+
         private ObservableCollection<Company> _Companies;
         public ObservableCollection<Company> Companies
         {
             get => _Companies;
             set => Set(ref _Companies, value);
         }
+
+        #endregion
+
+        #region Сотрудники
 
         private ObservableCollection<Employee> _Employees;
         public ObservableCollection<Employee> Employees
@@ -39,8 +57,45 @@ namespace DipaulTestTask.ViewModels
             set => Set(ref _Employees, value);
         }
 
+        #endregion
+
+        #region Выбранная компания
+
+        private Company _SelectedCompany;
+        public Company SelectedCompany
+        {
+            get => _SelectedCompany;
+            set 
+            {
+                Set(ref _SelectedCompany, value);
+                Employees.Clear();
+                if (_SelectedCompany is null) return;
+                foreach (Employee employee in _SelectedCompany.Employees)
+                    Employees?.Add(employee);
+            }
+        }
+
+        #endregion
+
+        #region Выбранный сотрудник
+
+        private Employee _SelectedEmployee;
+        public Employee SelectedEmployee
+        {
+            get => _SelectedEmployee;
+            set => Set(ref _SelectedEmployee, value);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Комманды
+
+        #region Загрузить
+
         private ICommand _LoadDataCommand;
-        public ICommand LoadDataCommand => _LoadDataCommand 
+        public ICommand LoadDataCommand => _LoadDataCommand
             ??= new LambdaCommand(OnLoadDataCommandExecuted);
 
         private void OnLoadDataCommandExecuted(object p)
@@ -48,7 +103,13 @@ namespace DipaulTestTask.ViewModels
             _companiesStorage.Load();
             Companies = new ObservableCollection<Company>(_companiesStorage.Items);
             Employees = new ObservableCollection<Employee>();
+            _SelectedCompany = default;
         }
+
+        #endregion
+
+        #region Сохранить
+
         private ICommand _SaveDataCommand;
         public ICommand SaveDataCommand => _SaveDataCommand
             ??= new LambdaCommand(OnSaveDataCommandExecuted);
@@ -58,33 +119,80 @@ namespace DipaulTestTask.ViewModels
             _companiesStorage.SaveChanges();
         }
 
-        private Company _SelectedCompany;
-        public Company SelectedCompany
-        {
-            get => _SelectedCompany;
-            set 
-            { 
-                Set(ref _SelectedCompany, value);
-                Employees.Clear();
-                foreach(Employee employee in _SelectedCompany.Employees)
-                {
-                    Employees.Add(employee);
-                }
-            }
-        }
+        #endregion
 
-        private Employee _SelectedEmployee;
-        public Employee SelectedEmployee
-        {
-            get => _SelectedEmployee;
-            set => Set(ref _SelectedEmployee, value);
-        }
+        #region Добавить компанию
 
-        private void OnEmployeePositionSourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        private ICommand _CreateCompanyCommand;
+        public ICommand CreateCompanyCommand => _CreateCompanyCommand
+            ??= new LambdaCommand(OnCreateCompanyCommandExecuted);
+
+        private void OnCreateCompanyCommandExecuted(object p)
         {
-            if (e.Property.Name == SelectedEmployee.Pos.ToString())
+            if (!CompanyEditDialog.Create(
+                out var id,
+                out var name))
                 return;
-            SelectedEmployee.Pos = (Position)Enum.Parse(typeof(Position), e.Property.Name);
+
+            var company = new Company
+            {
+                Id = Companies.DefaultIfEmpty().Max(s => s?.Id ?? 0) + 1,
+                Name = name,
+                Employees = new List<Employee>()
+            };
+
+            _companiesStorage.Items.Add(company);
+            Companies.Add(company);
         }
+
+        #endregion
+
+        #region Редактировать
+
+        // Этот функционал скорее не нужен, чем обратное, пусть пока лежит здесь
+        
+        /*        private ICommand _EditCompanyCommand;
+                public ICommand EditCompanyCommand => _EditCompanyCommand
+                    ??= new LambdaCommand(OnEditCompanyCommandExecuted, 
+                        CanEditCompanyCommandExecuted);
+
+                private bool CanEditCompanyCommandExecuted(object p) => p is Company;
+                private void OnEditCompanyCommandExecuted(object p)
+                {
+                    if (!(p is Company company)) return;
+
+                    var id = company.Id;
+                    var name = company.Name;
+
+                    if (!CompanyEditDialog.ShowDialog(
+                        "Редактирование компании",
+                        ref id,
+                        ref name))
+                        return;
+
+                    company.Id = id;
+                    company.Name = name;
+                }*/
+
+        #endregion
+
+        #region Удалить
+
+        private ICommand _DeleteCompanyCommand;
+        public ICommand DeleteCompanyCommand => _DeleteCompanyCommand
+            ??= new LambdaCommand(OnDeleteCompanyCommandExecuted, 
+                OnDeleteCompanyCommandCanExecute);
+
+        private bool OnDeleteCompanyCommandCanExecute(object p) => p is Company;
+        private void OnDeleteCompanyCommandExecuted(object p)
+        {
+            if (!(p is Company company)) return;
+
+            Companies.Remove(company);
+        }
+
+        #endregion
+
+        #endregion
     }
 }
