@@ -4,7 +4,7 @@ using DipaulTestTask.Infrastucture.Commands.Base;
 
 namespace DipaulTestTask.Infrastucture.Commands
 {
-    class CloseWIndowCommand : Command
+    class CloseWindowCommand : Command
     {
         protected override void Execute(object p)
         {
