@@ -83,13 +83,13 @@
                 </DataGrid.Columns>
             </DataGrid>
             <DockPanel Grid.Column="2" Grid.Row="1">
-                <Button DockPanel.Dock="Top">
+                <Button DockPanel.Dock="Top"
+                        Command="{Binding CreateEmployeeCommand}">
                     <TextBlock Text="Добавить сотрудника"
                                TextWrapping="Wrap"/>
                 </Button>
                 <Button DockPanel.Dock="Top" 
-                        Command="{Binding CreateCompanyCommand}"
-                        >
+                        Command="{Binding CreateCompanyCommand}">
                     <TextBlock Text="Добавить компанию"
                                TextWrapping="Wrap"/>
                 </Button>

@@ -143,6 +143,36 @@ namespace DipaulTestTask.ViewModels
 
             _companiesStorage.Items.Add(company);
             Companies.Add(company);
+            _companiesStorage.SaveChanges();
+        }
+
+        #endregion
+
+        #region Добавить сотрудника
+
+        private ICommand _CreateEmployeeCommand;
+
+        public ICommand CreateEmployeeCommand => _CreateEmployeeCommand
+            ??= new LambdaCommand(OnCreateEmployeeCommandExecuted);
+
+        public void OnCreateEmployeeCommandExecuted(object p)
+        {
+            if (!EmployeesEditDialog.Create(
+                out var id,
+                out var name,
+                out var pos))
+                return;
+
+            var employee = new Employee
+            {
+                Id = id,
+                Name = name,
+                Pos = pos
+            };
+
+            SelectedCompany.Employees.Add(employee);
+            Employees.Add(employee);
+            _companiesStorage.SaveChanges();
         }
 
         #endregion
@@ -150,7 +180,7 @@ namespace DipaulTestTask.ViewModels
         #region Редактировать
 
         // Этот функционал скорее не нужен, чем обратное, пусть пока лежит здесь
-        
+
         /*        private ICommand _EditCompanyCommand;
                 public ICommand EditCompanyCommand => _EditCompanyCommand
                     ??= new LambdaCommand(OnEditCompanyCommandExecuted, 
