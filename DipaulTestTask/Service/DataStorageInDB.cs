@@ -5,15 +5,22 @@ using Microsoft.Extensions.Configuration;
 
 using DipaulTestTask.Context;
 using DipaulTestTask.Models;
-
+using DipaulTestTask.Interfaces;
 
 namespace DipaulTestTask.Service
 {
-    class DataStorageInDB
+    class DataStorageInDB : ICompanyStorage
     {
         const string sql_server_connect_string = @"(localdb)\MSSQLLocalDB;Initial Catalog=CompaniesDB.db";
-                
-        public void InitDB()
+         
+        public DataStorageInDB()
+        {
+
+        }
+
+        public ICollection<Company> Items => throw new System.NotImplementedException();
+
+        public void Load()
         {
             var connection_options = new DbContextOptionsBuilder<CompaniesDB>()
                 .UseSqlServer(sql_server_connect_string)
@@ -23,7 +30,7 @@ namespace DipaulTestTask.Service
             {
                 db.Database.EnsureCreated();
 
-                if(!db.Companies.Any())
+                if (!db.Companies.Any())
                 {
                     var companies = new List<Company>
                     {
@@ -84,16 +91,17 @@ namespace DipaulTestTask.Service
                         }
                     };
 
-                    foreach(Company company in companies)
+                    foreach (Company company in companies)
                         db.Companies.Add(company);
 
                     db.SaveChanges();
                 }
-
-                var configuration = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .Build();
             }
-        }        
+        }
+
+        public void SaveChanges()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
