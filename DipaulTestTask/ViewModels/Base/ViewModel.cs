@@ -7,13 +7,13 @@ namespace DipaulTestTask.ViewModels.Base
     {
         public event PropertyChangedEventHandler PropertyChanged;
        
-        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
         protected virtual void Set<T>(
-            ref T field, T value, [CallerMemberName] string PropertyName = null)
+            ref T field, T value, [CallerMemberName] string PropertyName = "")
         {
             if (Equals(field, value))
                 return;
