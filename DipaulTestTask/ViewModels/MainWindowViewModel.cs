@@ -103,7 +103,7 @@ namespace DipaulTestTask.ViewModels
             _companiesStorage.Load();
             Companies = new ObservableCollection<Company>(_companiesStorage.Items);
             Employees = new ObservableCollection<Employee>();
-            _SelectedCompany = default;
+            _SelectedCompany = Companies[0];
         }
 
         #endregion
