@@ -6,7 +6,6 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:l="clr-namespace:DipaulTestTask"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
-        xmlns:td ="clr-namespace:DipaulTestTask.TestData"
         xmlns:vm="clr-namespace:DipaulTestTask.ViewModels"
         xmlns:cmd="clr-namespace:DipaulTestTask.Infrastucture.Commands"
         xmlns:mod="clr-namespace:DipaulTestTask.Models"
