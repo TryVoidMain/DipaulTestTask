@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using Microsoft.Win32;
 
 using DipaulTestTask.Interfaces;
 using DipaulTestTask.Models;
@@ -14,8 +15,8 @@ namespace DipaulTestTask.Service
             public List<Company> сompanies { get; set; } = new List<Company>();            
         }
 
-        private readonly string _FileName;
-
+        private string _FileName;
+        public DataStorageInXmlFile() { }
         public DataStorageInXmlFile(string fileName) => _FileName = fileName;
 
         private DataStructure Data { get; set; } = new DataStructure();
@@ -23,6 +24,16 @@ namespace DipaulTestTask.Service
         ICollection<Company> IStorage<Company>.Items => Data.сompanies;
         public void Load()
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Filter = "Файлы XML (*.xml)|*.xml",
+                Title = "Открыть файл с данными"                
+            };
+            
+            if(openFileDialog.ShowDialog() == true)
+                _FileName = openFileDialog.FileName;
+                
+
             if(!File.Exists(_FileName))
             {
                 Data = new DataStructure();

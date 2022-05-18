@@ -3,12 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:l="clr-namespace:DipaulTestTask"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
-        xmlns:vm="clr-namespace:DipaulTestTask.ViewModels"
         xmlns:cmd="clr-namespace:DipaulTestTask.Infrastucture.Commands"
-        xmlns:mod="clr-namespace:DipaulTestTask.Models"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="500" Width="800"
         MinHeight="350" MinWidth="500">

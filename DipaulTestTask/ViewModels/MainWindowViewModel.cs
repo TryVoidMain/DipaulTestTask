@@ -99,7 +99,8 @@ namespace DipaulTestTask.ViewModels
             ??= new LambdaCommand(OnLoadDataCommandExecuted);
 
         private void OnLoadDataCommandExecuted(object p)
-        {            
+        {  
+            
             _companiesStorage.Load();
             Companies = new ObservableCollection<Company>(_companiesStorage.Items);
             Employees = new ObservableCollection<Employee>();

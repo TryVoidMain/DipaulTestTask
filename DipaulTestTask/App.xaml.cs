@@ -29,6 +29,7 @@ namespace DipaulTestTask
                 host_builder.ConfigureServices(ConfigureServices);
 
                 return _Hosting = host_builder.Build();
+
             }
         }
 
@@ -40,9 +41,10 @@ namespace DipaulTestTask
         {
             services.AddSingleton<MainWindowViewModel>();
 
-            const string dataFileName = "Companies.xml";
-            var fileStorage = new DataStorageInXmlFile(dataFileName);
-            services.AddSingleton<ICompanyStorage>(fileStorage);
+            /*const string dataFileName = "Companies.xml";
+            var fileStorage = new DataStorageInXmlFile(dataFileName);*/
+            var companyStorage = new DataStorageInXmlFile();
+            services.AddSingleton<ICompanyStorage>(companyStorage);
         }
     }
 }
