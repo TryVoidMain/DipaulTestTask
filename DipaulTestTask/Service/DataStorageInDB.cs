@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
 
 using DipaulTestTask.Context;
 using DipaulTestTask.Models;
