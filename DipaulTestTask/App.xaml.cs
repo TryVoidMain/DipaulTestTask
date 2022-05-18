@@ -27,7 +27,7 @@ namespace DipaulTestTask
                                     .CreateDefaultBuilder(Environment.GetCommandLineArgs());
 
                 host_builder.ConfigureServices(ConfigureServices);
-                
+
                 return _Hosting = host_builder.Build();
             }
         }
